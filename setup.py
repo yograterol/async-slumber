@@ -7,7 +7,7 @@ tests_require = ["mock", "unittest2"]
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-version = "0.7.1"
+version = "2017.7"
 
 if sys.argv[-1] == 'publish':
     os.system("git tag -a %s -m 'v%s'" % (version, version))
@@ -27,11 +27,11 @@ setup(
         open(os.path.join(base_dir, "README.rst"), "r").read(),
         open(os.path.join(base_dir, "CHANGELOG.rst"), "r").read()
     ]),
-    url = "http://github.com/samgiles/slumber",
-    author = "Donald Stufft",
-    author_email = "donald.stufft@gmail.com",
-    maintainer = "Samuel Giles",
-    maintainer_email = "sam.e.giles@gmail.com",
+    url="http://github.com/samgiles/slumber",
+    author="Yohan Graterol",
+    author_email="y@platzi.com",
+    maintainer="Yohan Graterol",
+    maintainer_email="y@platzi.com",
     classifiers=[
         # See: https://pypi.python.org/pypi?:action=list_classifiers
         'Development Status :: 4 - Beta',
@@ -41,15 +41,8 @@ setup(
         # List of python versions and their support status:
         # https://en.wikipedia.org/wiki/CPython#Version_history
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP :: HTTP Servers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Testing',

@@ -1,20 +1,12 @@
-Slumber |build-status| |coverage-status| |docs|
+Async-Slumber |build-status| |coverage-status| |docs|
 ===============================================
 
 Slumber is a Python library that provides a convenient yet powerful
 object-oriented interface to ReSTful APIs. It acts as a wrapper around the
-excellent requests_ library and abstracts away the handling of URLs, serialization,
+excellent aiohttp_ library and abstracts away the handling of URLs, serialization,
 and request processing.
 
-.. _requests: http://python-requests.org/
-
-Getting Help
-============
-
-Visit IRC channel (`#slumber on irc.freenode.net`_) to get help, bounce ideas
-or generally shoot the breeze.
-
-.. _#slumber on irc.freenode.net: irc://irc.freenode.net/slumber
+.. _aiohttp: http://aiohttp.readthedocs.io/en/stable/
 
 QuickStart
 ==========
@@ -34,8 +26,8 @@ Requirements
 
 Slumber requires the following modules.
 
-* Python 2.6+
-* requests
+* Python 2.5+
+* aiohttp
 * pyyaml (If you are using the optional YAML serialization)
 
 .. |build-status| image:: https://travis-ci.org/samgiles/slumber.svg?branch=master

@@ -3,6 +3,11 @@
 Changelog
 =========
 
+2017.7
+------
+* ``aiohttp`` in place of requests
+* Support to Python 3.5 only for now.
+
 
 development version
 -------------------
