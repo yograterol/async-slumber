@@ -26,7 +26,7 @@ Requirements
 
 Slumber requires the following modules.
 
-* Python 2.5+
+* Python 3.5+
 * aiohttp
 * pyyaml (If you are using the optional YAML serialization)
 
