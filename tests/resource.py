@@ -24,7 +24,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = '{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -53,7 +53,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = "Mocked Content"
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -82,7 +82,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = '{"actions": {"POST": {"foo": {"required": false, "type": "string"}}}}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -114,7 +114,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = ''
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -148,7 +148,7 @@ class ResourceTestCase(unittest.TestCase):
         r2.content = '{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
@@ -177,7 +177,7 @@ class ResourceTestCase(unittest.TestCase):
         r.headers = {"content-type": "application/json"}
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -211,7 +211,7 @@ class ResourceTestCase(unittest.TestCase):
         r2.content = '{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
@@ -240,7 +240,7 @@ class ResourceTestCase(unittest.TestCase):
         r.headers = {"content-type": "application/json"}
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -274,7 +274,7 @@ class ResourceTestCase(unittest.TestCase):
         r2.content = '{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.side_effect = (r1, r2)
@@ -303,7 +303,7 @@ class ResourceTestCase(unittest.TestCase):
         r.headers = {"content-type": "application/json"}
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -347,7 +347,7 @@ class ResourceTestCase(unittest.TestCase):
         resp.content = None
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
 
@@ -362,7 +362,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = '{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -395,7 +395,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = ''
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
 
@@ -412,7 +412,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = ''
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -427,7 +427,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = ''
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -445,7 +445,7 @@ class ResourceTestCase(unittest.TestCase):
         r.headers = {"content-type": "application/json"}
         r.content = '{"result": ["a", "b", "c"]}'
 
-        client = slumber.API(base_url="http://example/api/v1", session=mock.Mock(spec=requests.Session))
+        client = slumber.API(base_url="http://example/api/v1", session=mock.Mock(spec=aiohttp.ClientSession))
         client.test._store["session"].request.return_value = r
         resp = client.test.get()
 
@@ -502,7 +502,7 @@ class ResourceTestCase(unittest.TestCase):
         r.content = '{"result": "a"}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
             "raw": True,
         })
@@ -605,7 +605,7 @@ class ResourceTestCase(unittest.TestCase):
         r.headers = {"content-type": "application/json"}
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
