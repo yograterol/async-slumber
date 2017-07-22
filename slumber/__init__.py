@@ -1,4 +1,4 @@
-import requests
+import aiohttp
 
 try:
     from urllib.parse import urlparse, urlsplit, urlunsplit
@@ -124,12 +124,6 @@ class Resource(ResourceAttributesMixin, object):
             except exceptions.SerializerNotAvailable:
                 return resp.content
 
-            if type(resp.content) == bytes:
-                try:
-                    encoding = requests.utils.guess_json_utf(resp.content)
-                    return stype.loads(resp.content.decode(encoding))
-                except:
-                    return resp.content
             return stype.loads(resp.content)
         else:
             return resp.content
@@ -206,7 +200,7 @@ class API(ResourceAttributesMixin, object):
             serializer = Serializer(default=format)
 
         if session is None:
-            session = requests.session()
+            session = aiohttp.ClientSession()
 
         if auth is not None:
             session.auth = auth

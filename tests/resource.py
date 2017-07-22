@@ -2,6 +2,7 @@
 import sys
 import mock
 import requests
+import aiohttp
 import slumber
 import slumber.serialize
 import unittest2 as unittest
@@ -17,7 +18,7 @@ class ResourceTestCase(unittest.TestCase):
                 append_slash=False, raw=False)
 
     def test_get_200_json(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = '{"result": ["a", "b", "c"]}'
@@ -46,7 +47,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_get_200_text(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "text/plain"}
         r.content = "Mocked Content"
@@ -75,7 +76,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp, r.content)
 
     def test_options_200_json(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = '{"actions": {"POST": {"foo": {"required": false, "type": "string"}}}}'
@@ -107,7 +108,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['actions']['POST']['foo']['type'], 'string')
 
     def test_head_200_json(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = ''
@@ -136,12 +137,12 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp, r.content)
 
     def test_post_201_redirect(self):
-        r1 = mock.Mock(spec=requests.Response)
+        r1 = mock.Mock(spec=aiohttp.ClientResponse)
         r1.status_code = 201
         r1.headers = {"location": "http://example/api/v1/test/1"}
         r1.content = ''
 
-        r2 = mock.Mock(spec=requests.Response)
+        r2 = mock.Mock(spec=aiohttp.ClientResponse)
         r2.status_code = 200
         r2.headers = {"content-type": "application/json"}
         r2.content = '{"result": ["a", "b", "c"]}'
@@ -170,7 +171,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_post_decodable_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.content = '{"result": ["a", "b", "c"]}'
         r.headers = {"content-type": "application/json"}
@@ -199,12 +200,12 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_patch_201_redirect(self):
-        r1 = mock.Mock(spec=requests.Response)
+        r1 = mock.Mock(spec=aiohttp.ClientResponse)
         r1.status_code = 201
         r1.headers = {"location": "http://example/api/v1/test/1"}
         r1.content = ''
 
-        r2 = mock.Mock(spec=requests.Response)
+        r2 = mock.Mock(spec=aiohttp.ClientResponse)
         r2.status_code = 200
         r2.headers = {"content-type": "application/json"}
         r2.content = '{"result": ["a", "b", "c"]}'
@@ -233,7 +234,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_patch_decodable_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.content = '{"result": ["a", "b", "c"]}'
         r.headers = {"content-type": "application/json"}
@@ -262,12 +263,12 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_put_201_redirect(self):
-        r1 = mock.Mock(spec=requests.Response)
+        r1 = mock.Mock(spec=aiohttp.ClientResponse)
         r1.status_code = 201
         r1.headers = {"location": "http://example/api/v1/test/1"}
         r1.content = ''
 
-        r2 = mock.Mock(spec=requests.Response)
+        r2 = mock.Mock(spec=aiohttp.ClientResponse)
         r2.status_code = 200
         r2.headers = {"content-type": "application/json"}
         r2.content = '{"result": ["a", "b", "c"]}'
@@ -296,7 +297,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_put_decodable_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.content = '{"result": ["a", "b", "c"]}'
         r.headers = {"content-type": "application/json"}
@@ -329,7 +330,7 @@ class ResourceTestCase(unittest.TestCase):
             "serializer": slumber.serialize.Serializer(),
         })
 
-        resp = mock.Mock(spec=requests.Response)
+        resp = mock.Mock(spec=aiohttp.ClientResponse)
         resp.status_code = 200
         resp.headers = {"content-type": "application/json; charset=utf-8"}
         resp.content = '{"foo": "bar"}'
@@ -340,7 +341,7 @@ class ResourceTestCase(unittest.TestCase):
             self.fail("Serialization did not take place")
 
     def test_post_204_json(self):
-        resp = mock.Mock(spec=requests.Response)
+        resp = mock.Mock(spec=aiohttp.ClientResponse)
         resp.status_code = 204
         resp.headers = {"content-type": "application/json"}
         resp.content = None
@@ -355,7 +356,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(self.base_resource.post(), None)
 
     def test_get_200_subresource_json(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = '{"result": ["a", "b", "c"]}'
@@ -388,7 +389,7 @@ class ResourceTestCase(unittest.TestCase):
             self.base_resource._subresource
 
     def test_get_400_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 400
         r.headers = {"content-type": "application/json"}
         r.content = ''
@@ -405,7 +406,7 @@ class ResourceTestCase(unittest.TestCase):
 
 
     def test_get_404_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 404
         r.headers = {"content-type": "application/json"}
         r.content = ''
@@ -420,7 +421,7 @@ class ResourceTestCase(unittest.TestCase):
             self.base_resource.req._request("GET")
 
     def test_get_500_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 500
         r.headers = {"content-type": "application/json"}
         r.content = ''
@@ -439,7 +440,7 @@ class ResourceTestCase(unittest.TestCase):
             client = slumber.API()
 
     def test_api(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = '{"result": ["a", "b", "c"]}'
@@ -466,13 +467,13 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(self.base_resource.url(), "http://example/api/v1/test")
 
     def test_get_200_json_py3(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = b'{"result": ["a", "b", "c"]}'
 
         self.base_resource._store.update({
-            "session": mock.Mock(spec=requests.Session),
+            "session": mock.Mock(spec=aiohttp.ClientSession),
             "serializer": slumber.serialize.Serializer(),
         })
         self.base_resource._store["session"].request.return_value = r
@@ -495,7 +496,7 @@ class ResourceTestCase(unittest.TestCase):
         self.assertEqual(resp['result'], ['a', 'b', 'c'])
 
     def test_get_with_raw(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {"content-type": "application/json"}
         r.content = '{"result": "a"}'
@@ -509,13 +510,13 @@ class ResourceTestCase(unittest.TestCase):
 
         (response, decoded) = self.base_resource.get()
 
-        self.assertIsInstance(response, requests.Response)
+        self.assertIsInstance(response, aiohttp.ClientResponse)
         self.assertEqual(decoded["result"], "a")
 
     def test_as_raw_resource_get(self):
         apiurl = "http://example/api/v1"
-        ses = mock.Mock(spec=requests.session())
-        r = mock.Mock(spec=requests.Response)
+        ses = mock.Mock(spec=aiohttp.ClientSession)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {}
         ses.request.return_value = r
@@ -523,12 +524,12 @@ class ResourceTestCase(unittest.TestCase):
         api = slumber.API(apiurl, session=ses)
 
         (response, _) = api.myresource(1).subresource.as_raw().get()
-        self.assertIsInstance(response, requests.Response)
+        self.assertIsInstance(response, aiohttp.ClientResponse)
 
     def test_all_resource_requests_are_raw_if_set_in_api(self):
         apiurl = "http://example/api/v1"
-        ses = mock.Mock(spec=requests.session())
-        r = mock.Mock(spec=requests.Response)
+        ses = mock.Mock(spec=aiohttp.ClientSession)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.headers = {}
         ses.request.return_value = r
@@ -536,16 +537,16 @@ class ResourceTestCase(unittest.TestCase):
         api = slumber.API(apiurl, session=ses, raw=True)
 
         (response, _) = api.myresource(1).subresource.get()
-        self.assertIsInstance(response, requests.Response)
+        self.assertIsInstance(response, aiohttp.ClientResponse)
 
         (response, _) = api.myresource(1).get()
-        self.assertIsInstance(response, requests.Response)
+        self.assertIsInstance(response, aiohttp.ClientResponse)
 
     def test_send_content_type_only_if_body_data_exists(self):
         apiuri = "http://example/api/v1/"
         newuri = "http://example/api/v1/myresource/"
-        ses = mock.Mock(spec=requests.session())
-        r = mock.Mock(spec=requests.Response)
+        ses = mock.Mock(spec=aiohttp.ClientSession)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 201
         r.headers = {}
         ses.request.return_value = r
@@ -583,7 +584,7 @@ class ResourceTestCase(unittest.TestCase):
         postparams = dict(key1=1, key2="two")
         listuri = "http://example/api/v1/"
         newuri = "http://example/api/v1/myres/newthing/"
-        ses = mock.Mock(spec=requests.session())
+        ses = mock.Mock(spec=aiohttp.ClientSession)
         ses.request.return_value.status_code = 201
         ses.request.return_value.headers = { "location": newuri }
         api = slumber.API(listuri, session=ses)
@@ -598,7 +599,7 @@ class ResourceTestCase(unittest.TestCase):
                 data=None)
 
     def test_unicode_decodable_response(self):
-        r = mock.Mock(spec=requests.Response)
+        r = mock.Mock(spec=aiohttp.ClientResponse)
         r.status_code = 200
         r.content = '{"result": "Préparatoire"}'
         r.headers = {"content-type": "application/json"}

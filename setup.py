@@ -2,7 +2,7 @@ import os
 import sys
 from setuptools import setup
 
-install_requires = ["requests"]
+install_requires = ["aiohttp"]
 tests_require = ["mock", "unittest2"]
 
 base_dir = os.path.dirname(os.path.abspath(__file__))

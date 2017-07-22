@@ -45,6 +45,8 @@ class JsonSerializer(BaseSerializer):
     key = "json"
 
     def loads(self, data):
+        if isinstance(data, bytes):
+            data = bytes(data).decode('utf-8')
         return json.loads(data)
 
     def dumps(self, data):
